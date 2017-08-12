@@ -126,7 +126,9 @@ struct RegMap<Xbyak::Xmm>
     bool vec_reg() {
         return true;
     }
-
+	bool bnd_reg() {
+		return false;
+	}
     void save(Xbyak::CodeGenerator *g, Xbyak::Xmm r, int off, enum operand_type ot) {
         switch (ot) {
         case OT_INT:
@@ -187,7 +189,9 @@ struct RegMap<Xbyak::Ymm>
     bool vec_reg() {
         return true;
     }
-
+	bool bnd_reg() {
+		return false;
+	}
     void save(Xbyak::CodeGenerator *g, Xbyak::Ymm r, int off, enum operand_type ot) {
         switch (ot) {
         case OT_INT:
@@ -251,6 +255,9 @@ struct RegMap<Xbyak::Zmm>
     bool vec_reg() {
         return true;
     }
+	bool bnd_reg() {
+		return false;
+	}
 
     void save(Xbyak::CodeGenerator *g, Xbyak::Ymm r, int off, enum operand_type ot) {
         switch (ot) {
@@ -295,8 +302,6 @@ struct RegMap<Xbyak::Zmm>
     }
 };
 
-
-
 template <>
 struct RegMap<Xbyak::Reg64>
 {
@@ -323,7 +328,9 @@ struct RegMap<Xbyak::Reg64>
     bool vec_reg() {
         return false;
     }
-
+	bool bnd_reg() {
+		return false;
+	}
     void save(Xbyak::CodeGenerator *g, Xbyak::Reg64 r, int off, enum operand_type ) {
         g->mov(g->ptr[g->rsp + off], r);
     }
@@ -335,6 +342,41 @@ struct RegMap<Xbyak::Reg64>
     void killdep(Xbyak::CodeGenerator *g, Xbyak::Reg64 r, enum operand_type) {
         g->xor_(r, r);
     }
+
+};
+
+
+template <>
+struct RegMap<Xbyak::BoundsReg>
+{
+	const char *name;
+	Xbyak::BoundsReg  v4, v5, v6, v7, v8, v9, v10, v11;// dummy
+	Xbyak::BoundsReg  v12, v13, v14, v15;
+
+	RegMap()
+		:name("bounds"),
+		v12(0),
+		v13(1),
+		v14(2),
+		v15(3)
+	{}
+
+	bool vec_reg() {
+		return false;
+	}
+	bool bnd_reg() {
+		return true;
+	}
+
+	void save(Xbyak::CodeGenerator *g, Xbyak::BoundsReg r, int off, enum operand_type) {
+		g->bndmov(g->ptr[g->rsp + off], r);
+	}
+
+	void restore(Xbyak::CodeGenerator *g, Xbyak::BoundsReg r, int off, enum operand_type) {
+		g->bndmov(r, g->ptr[g->rsp + off]);
+	}
+
+	void killdep(Xbyak::CodeGenerator *g, Xbyak::BoundsReg r, enum operand_type) {}
 
 };
 
@@ -356,7 +398,14 @@ struct gen_throughput{
                 f(g, rm.v14, rm.v14);
                 f(g, rm.v15, rm.v15);
             }
-        } else {
+		} else if (rm.bnd_reg()) {
+			for (int ii = 0; ii<num_insn/4 ; ii++) {
+				f(g, rm.v12, rm.v12);
+				f(g, rm.v13, rm.v13);
+				f(g, rm.v14, rm.v14);
+				f(g, rm.v15, rm.v15);
+			}
+		} else {
             for (int ii=0; ii<num_insn/8; ii++) {
                 f(g, rm.v8, rm.v8);
                 f(g, rm.v9, rm.v9);
@@ -388,21 +437,21 @@ struct Gen
         and_(rsp, -(Xbyak::sint64)64);
         sub(rsp, reg_size * (num_reg + 1));
 
-        if (rm.vec_reg()) {
-            rm.save(this, rm.v4,  -reg_size*12, ot);
-            rm.save(this, rm.v5,  -reg_size*11, ot);
-            rm.save(this, rm.v6,  -reg_size*10, ot);
-            rm.save(this, rm.v7,  -reg_size*9, ot);
-        }
+		if (rm.vec_reg()) {
+			rm.save(this, rm.v4, -reg_size * 12, ot);
+			rm.save(this, rm.v5, -reg_size * 11, ot);
+			rm.save(this, rm.v6, -reg_size * 10, ot);
+			rm.save(this, rm.v7, -reg_size * 9, ot);
+		}
 
-        rm.save(this, rm.v8,  -reg_size*8, ot);
-        rm.save(this, rm.v9,  -reg_size*7, ot);
-        rm.save(this, rm.v10, -reg_size*6, ot);
-        rm.save(this, rm.v11, -reg_size*5, ot);
-        rm.save(this, rm.v12, -reg_size*4, ot);
-        rm.save(this, rm.v13, -reg_size*3, ot);
-        rm.save(this, rm.v14, -reg_size*2, ot);
-        rm.save(this, rm.v15, -reg_size*1, ot);
+		rm.save(this, rm.v8, -reg_size * 8, ot);
+		rm.save(this, rm.v9, -reg_size * 7, ot);
+		rm.save(this, rm.v10, -reg_size * 6, ot);
+		rm.save(this, rm.v11, -reg_size * 5, ot);
+		rm.save(this, rm.v12, -reg_size * 4, ot);
+		rm.save(this, rm.v13, -reg_size * 3, ot);
+		rm.save(this, rm.v14, -reg_size * 2, ot);
+		rm.save(this, rm.v15, -reg_size * 1, ot);
 
         if (rm.vec_reg()) {
             rm.killdep(this, rm.v4, ot);
@@ -440,6 +489,10 @@ struct Gen
             break;
 
         case LT_THROUGHPUT_KILLDEP:
+			if (rm.bnd_reg()) {
+				break;
+			}
+
             if (rm.vec_reg()) {
                 for (int ii=0; ii<num_insn/12; ii++) {
                     f(this, rm.v4, rm.v4);
@@ -939,22 +992,22 @@ main(int argc, char **argv)
 
 #ifdef ENABLE_MPX
     /* MPX */
-    GEN_throughput_only(Reg64, "bndcu",
+    GEN_throughput_only(BoundsReg, "bndcu",
                         (g->bndcu(g->bnd0, g->rax)),
                         false, OT_INT);
-    GEN_throughput_only(Reg64, "bndmk",
+    GEN_throughput_only(BoundsReg, "bndmk",
                         (g->bndmk(g->bnd0, g->ptr[g->rax*4+100])),
                         false, OT_INT);
-    GEN_throughput_only(Reg64, "bndmov(st)",
+    GEN_throughput_only(BoundsReg, "bndmov(st)",
                        (g->bndmov(g->ptr[g->rdx], g->bnd0)),
                         false, OT_INT);
-    GEN_throughput_only(Reg64, "bndmov(ld)",
+    GEN_throughput_only(BoundsReg, "bndmov(ld)",
                         (g->bndmov(g->bnd0, g->ptr[g->rdx])),
                         false, OT_INT);
-    GEN_throughput_only(Reg64, "bndldx",
+    GEN_throughput_only(BoundsReg, "bndldx",
                         (g->bndldx(g->bnd0, g->ptr[g->rdx])),
                         false, OT_INT);
-    GEN_throughput_only(Reg64, "bndstx",
+    GEN_throughput_only(BoundsReg, "bndstx",
                         (g->bndstx(g->ptr[g->rdx], g->bnd0)),
                         false, OT_INT);
 #endif

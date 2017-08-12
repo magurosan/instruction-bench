@@ -1,6 +1,12 @@
 *~
 *.exe
-bench.asm
 *.ilk
 *.obj
 *.pdb
+*.db
+*.ipch
+*.tlog
+*.idb
+*.bin
+*.iobj
+*.ipdb

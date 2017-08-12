@@ -169,6 +169,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>ENABLE_MPX</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\xbyak\xbyak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/d2MPX</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +196,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>ENABLE_MPX</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\xbyak\xbyak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/d2MPX</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -227,6 +229,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>ENABLE_MPX</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\xbyak\xbyak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/d2MPX</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -261,6 +264,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>ENABLE_MPX</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\..\xbyak\xbyak;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/d2MPX</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

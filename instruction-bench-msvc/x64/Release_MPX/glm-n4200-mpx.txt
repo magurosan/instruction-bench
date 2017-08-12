@@ -70,3 +70,4 @@ Intel(R) Pentium(R) CPU N4200 @ 1.10GHz
   bounds:                              bndmov(ld):throughput: CPI=    2.95, IPC=    0.34
   bounds:                                  bndldx:throughput: CPI=    8.64, IPC=    0.12
   bounds:                                  bndstx:throughput: CPI=   10.36, IPC=    0.10
+  bounds:                                   bndcl:throughput: CPI=    0.92, IPC=    1.09

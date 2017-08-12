@@ -1,0 +1,72 @@
+Intel(R) Pentium(R) CPU N4200 @ 1.10GHz
+== latency/throughput ==
+   reg64:                                     add:   latency: CPI=    0.48, IPC=    2.10
+   reg64:                                     add:throughput: CPI=    0.15, IPC=    6.55
+   reg64:                                     lea:   latency: CPI=    0.46, IPC=    2.18
+   reg64:                                     lea:throughput: CPI=    0.15, IPC=    6.54
+   reg64:                             xor dst,dst:   latency: CPI=    0.17, IPC=    6.04
+   reg64:                             xor dst,dst:throughput: CPI=    0.28, IPC=    3.52
+   reg64:                                     xor:   latency: CPI=    0.17, IPC=    6.06
+   reg64:                                     xor:throughput: CPI=    0.31, IPC=    3.24
+   reg64:                                    load:   latency: CPI=    1.37, IPC=    0.73
+   reg64:                                    load:throughput: CPI=    0.54, IPC=    1.85
+   reg64:                                   crc32:   latency: CPI=    1.42, IPC=    0.71
+   reg64:                                   crc32:throughput: CPI=    0.51, IPC=    1.98
+    m128:                                    pxor:   latency: CPI=    0.23, IPC=    4.37
+    m128:                                    pxor:throughput: CPI=    0.23, IPC=    4.37
+    m128:                                    padd:   latency: CPI=    0.46, IPC=    2.18
+    m128:                                    padd:throughput: CPI=    0.23, IPC=    4.37
+    m128:                                  pmuldq:   latency: CPI=    1.84, IPC=    0.54
+    m128:                                  pmuldq:throughput: CPI=    0.46, IPC=    2.19
+    m128:                                  loadps:   latency: CPI=    3.72, IPC=    0.27
+    m128:                                  loadps:throughput: CPI=    0.46, IPC=    2.18
+    m128:                                   xorps:   latency: CPI=    0.23, IPC=    4.37
+    m128:                                   xorps:throughput: CPI=    0.28, IPC=    3.62
+    m128:                                   addps:   latency: CPI=    1.38, IPC=    0.73
+    m128:                                   addps:throughput: CPI=    0.46, IPC=    2.18
+    m128:                                   mulps:   latency: CPI=    1.83, IPC=    0.55
+    m128:                                   mulps:throughput: CPI=    0.50, IPC=    1.99
+    m128:                                   divps:   latency: CPI=    9.25, IPC=    0.11
+    m128:                                   divps:throughput: CPI=    8.75, IPC=    0.11
+    m128:                                   divpd:   latency: CPI=    9.18, IPC=    0.11
+    m128:                                   divpd:throughput: CPI=    8.80, IPC=    0.11
+    m128:                                 rsqrtps:   latency: CPI=    4.12, IPC=    0.24
+    m128:                                 rsqrtps:throughput: CPI=    2.80, IPC=    0.36
+    m128:                                   rcpps:   latency: CPI=    4.12, IPC=    0.24
+    m128:                                   rcpps:throughput: CPI=    2.82, IPC=    0.35
+    m128:                                 blendps:   latency: CPI=    0.46, IPC=    2.18
+    m128:                                 blendps:throughput: CPI=    0.23, IPC=    4.37
+    m128:                                blendvps:   latency: CPI=    1.85, IPC=    0.54
+    m128:                                blendvps:throughput: CPI=    2.77, IPC=    0.36
+    m128:                                  pshufb:   latency: CPI=    0.46, IPC=    2.19
+    m128:                                  pshufb:throughput: CPI=    0.46, IPC=    2.18
+    m128:                                  shufps:   latency: CPI=    0.46, IPC=    2.15
+    m128:                                  shufps:throughput: CPI=    0.23, IPC=    4.37
+    m128:                                  pmullw:   latency: CPI=    1.85, IPC=    0.54
+    m128:                                  pmullw:throughput: CPI=    0.46, IPC=    2.18
+    m128:                                  phaddd:   latency: CPI=    2.85, IPC=    0.35
+    m128:                                  phaddd:throughput: CPI=    1.94, IPC=    0.51
+    m128:                                  haddps:   latency: CPI=    4.17, IPC=    0.24
+    m128:                                  haddps:throughput: CPI=    1.92, IPC=    0.52
+    m128:                                  pinsrd:throughput: CPI=    0.70, IPC=    1.42
+    m128:                            pinsrd->pexr:   latency: CPI=    4.26, IPC=    0.23
+    m128:                                    dpps:   latency: CPI=   12.55, IPC=    0.08
+    m128:                                    dpps:throughput: CPI=    9.97, IPC=    0.10
+    m128:                                cvtps2dq:   latency: CPI=    2.70, IPC=    0.37
+    m128:                                cvtps2dq:throughput: CPI=    0.69, IPC=    1.44
+   reg64:                                  popcnt:   latency: CPI=    4.11, IPC=    0.24
+   reg64:                                  popcnt:throughput: CPI=    1.36, IPC=    0.74
+    m128:                                  aesenc:   latency: CPI=   11.56, IPC=    0.09
+    m128:                                  aesenc:throughput: CPI=    1.10, IPC=    0.91
+    m128:                              aesenclast:   latency: CPI=    3.53, IPC=    0.28
+    m128:                              aesenclast:throughput: CPI=    0.95, IPC=    1.06
+    m128:                                  aesdec:   latency: CPI=    2.91, IPC=    0.34
+    m128:                                  aesdec:throughput: CPI=    0.99, IPC=    1.01
+    m128:                              aesdeclast:   latency: CPI=    2.91, IPC=    0.34
+    m128:                              aesdeclast:throughput: CPI=    0.99, IPC=    1.01
+   reg64:                                   bndcu:throughput: CPI=    0.15, IPC=    6.54
+   reg64:                                   bndmk:throughput: CPI=    0.26, IPC=    3.92
+   reg64:                              bndmov(st):throughput: CPI=    0.15, IPC=    6.56
+   reg64:                              bndmov(ld):throughput: CPI=    0.15, IPC=    6.56
+   reg64:                                  bndldx:throughput: CPI=    0.15, IPC=    6.56
+   reg64:                                  bndstx:throughput: CPI=    0.15, IPC=    6.56
